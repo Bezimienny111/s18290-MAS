@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <title>Add Employees</title>
+</head>
+<body>
+
+    <div class ="container">
+        <h2>Add Employee</h2>
+        <hr/>
+        <a th:href="@{/list}" class="btn btn-primary mb-2">Back</a>
+
+        <table class="table table-bordered table-striped" id="employee-table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Position</th>
+                <th>Total Repairs</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:object="${employee}">
+                <td th:text="${employee.getName()}"/>
+                <td th:text="${employee.getEmail()}"/>
+                <td th:text="${employee.getDepartment()}"/>
+                <td th:text="${employee.getPosition().getJobPosition()}"/>
+                <td th:text="${employee.getTotalRepairs()}"/>
+            </tr>
+            </tbody>
+
+        </table>
+        <table class="table table-bordered table-striped" id="contracts">
+            <thead>
+            <tr>
+                <th>Salary</th>
+                <th>Repairs to bonus</th>
+                <th>Maximum bonus</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="contract: ${employee.contracts}">
+                <td th:text="${contract.baseSalary}"/>
+                <td th:text="${contract.countOfRepairs}"/>
+                <td th:text="${contract.maxAddon}"/>
+            </tbody>
+        </table>
+        <table class="table table-bordered table-striped" id="repair">
+            <thead>
+            <tr>
+                <th>Repair</th>
+                <th>Details of repair</th>
+                <th>Servisants</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="repair: ${repairs}">
+                <td th:text="${repair.name}"/>
+                <td>
+                    <a class="btn btn-info">More Info</a>
+                </td>
+                <td>
+                     <table class="table table-bordered table-striped" id="servise">
+                         <tbody>
+                             <tr th:each="servisant: ${repair.servisants()}">
+                                 <td th:text="${servisant.getName()}"/>
+                                 <td>
+                                     <a th:href="@{/showDetailsForm(employeeId=${servisant.getId()})}" class="btn btn-info">Details</a>
+                                 </td>
+                             </tr>
+                         </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</body>
+</html>

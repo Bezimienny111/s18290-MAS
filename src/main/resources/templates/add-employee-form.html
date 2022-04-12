@@ -20,6 +20,10 @@
 
             <input type="text" th:field="*{department}" placeholder="Enter Dept" class="form-control col-4 mb-4"/>
 
+            <select name="jobposition" th:field="*{position}">
+                <option th:each="JobPosition : ${T(com.example.s18290mas.model.JobPosition).values()}"
+                        th:value="${JobPosition}" th:text="${JobPosition.getJobPosition()}"></option>
+            </select>
             <button class="btn btn-primary" type="submit">Save</button>
             <input type="hidden" th:field="*{id}"/>
             <hr/>

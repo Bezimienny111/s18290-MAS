@@ -21,19 +21,19 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Email</th>
-                    <th>Department</th>
+                     <th>Position</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
             <tr th:each="employee: ${employees}">
-                <td th:text="${employee.name}"/>
-                <td th:text="${employee.email}"/>
-                <td th:text="${employee.department}"/>
+                <td th:text="${employee.getName()}"/>
+                <td th:text="${employee.getPosition().getJobPosition()}"/>
+
                 <td>
-                    <a th:href="@{/showUpdateForm(employeeId=${employee.id})}" class="btn btn-info">Update</a>
-                    <a th:href="@{/deleteEmployee(employeeId=${employee.id})}" class="btn btn-danger ml-2">Delete</a>
+                    <a th:href="@{/showDetailsForm(employeeId=${employee.getId()})}" class="btn btn-info">Details</a>
+                    <a th:href="@{/showUpdateForm(employeeId=${employee.getId()})}" class="btn btn-info">Update</a>
+                    <a th:href="@{/deleteEmployee(employeeId=${employee.getId()})}" class="btn btn-danger ml-2">Delete</a>
                 </td>
             </tr>
             </tbody>
