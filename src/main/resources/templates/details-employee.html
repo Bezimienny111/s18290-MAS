@@ -10,9 +10,17 @@
 <body>
 
     <div class ="container">
-        <h2>Add Employee</h2>
+        <h2>Employee details</h2>
         <hr/>
         <a th:href="@{/list}" class="btn btn-primary mb-2">Back</a>
+        <hr/>
+
+            <a th:href="@{/showBonusFormDto(employeeId=${employee.getId()},
+                                                    bonus=${employee.getBonusSalary()},
+                                                    max_bonus=${employee.getLastContact().maxAddon},
+                                                    repairs=${employee.getTotalRepairs()},
+                                                    min_repairs=${employee.getLastContact().countOfRepairs})}"
+           class="btn btn-primary mb-2">Add bonus</a>
 
         <table class="table table-bordered table-striped" id="employee-table">
             <thead>
@@ -21,6 +29,7 @@
                 <th>Email</th>
                 <th>Department</th>
                 <th>Position</th>
+                <th>Total Bonus Salary</th>
                 <th>Total Repairs</th>
 
             </tr>
@@ -31,11 +40,35 @@
                 <td th:text="${employee.getEmail()}"/>
                 <td th:text="${employee.getDepartment()}"/>
                 <td th:text="${employee.getPosition().getJobPosition()}"/>
+                <td th:text="${employee.getBonusSalary()}"/>
                 <td th:text="${employee.getTotalRepairs()}"/>
             </tr>
             </tbody>
 
         </table>
+        <p class="lead">Actual Contract</p>
+        <hr/>
+        <table class="table table-bordered table-striped" id="contract-lats">
+            <thead>
+            <tr>
+                <th>Salary</th>
+                <th>Repairs to bonus</th>
+                <th>Maximum bonus</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:object="${employee}">
+                <td th:text="${employee.getLastContact().baseSalary}"/>
+                <td th:text="${employee.getLastContact().countOfRepairs}"/>
+                <td th:text="${employee.getLastContact().maxAddon}"/>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <hr/>
+        <p class="lead">History of Contracts</p>
+        <hr/>
         <table class="table table-bordered table-striped" id="contracts">
             <thead>
             <tr>
@@ -45,7 +78,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="contract: ${employee.contracts}">
+            <tr th:each="contract: ${employee.getContracts()}">
                 <td th:text="${contract.baseSalary}"/>
                 <td th:text="${contract.countOfRepairs}"/>
                 <td th:text="${contract.maxAddon}"/>
@@ -63,7 +96,7 @@
             <tr th:each="repair: ${repairs}">
                 <td th:text="${repair.name}"/>
                 <td>
-                    <a class="btn btn-info">More Info</a>
+                    <a th:href="@{/showRepairsForm(repairsId=${repair.getId()})}" class="btn btn-info">More Info</a>
                 </td>
                 <td>
                      <table class="table table-bordered table-striped" id="servise">
@@ -80,8 +113,6 @@
             </tr>
             </tbody>
         </table>
-
-
     </div>
 </body>
 </html>

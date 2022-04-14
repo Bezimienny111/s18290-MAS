@@ -11,27 +11,30 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Getter
-@Setter
 @Table(name="Contracts")
 public class Contract {
 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Getter
+    @Setter
     @Column(precision=16, scale=2)
     private float maxAddon;
 
     @Getter
+    @Setter
     @Column(precision=11, scale=0)
     private int countOfRepairs;
 
     @Getter
+    @Setter
     @Column(precision=16, scale=2)
     private float baseSalary;
 
+    @Getter
     @ManyToOne(
             fetch = FetchType.LAZY,
             optional = false

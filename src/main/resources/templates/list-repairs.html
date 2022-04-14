@@ -13,43 +13,30 @@
 <body>
 
     <div class ="container">
-        <h3>"List Employees</h3>
+        <h3>List of Repairs</h3>
         <hr/>
-        <a th:href="@{/addEmployeeForm}" class="btn btn-info mb-2">Add Emp</a>
-        <a th:href="@{/showRepairs}" class="btn btn-info mb-2">Repairs</a>
+        <a th:href="@{/list}" class="btn btn-info">Employees</a>
         <hr/>
         <table class="table table-bordered table-striped" id="employee-table">
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Position</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-            <tr th:each="employee: ${employees}">
-                <td th:text="${employee.getName()}"/>
-                <td th:text="${employee.getPosition().getJobPosition()}"/>
+            <tr th:each="repair: ${repairs}">
+                <td th:text="${repair.getName()}"/>
                 <td>
-                    <a th:href="@{/showDetailsForm(employeeId=${employee.getId()})}" class="btn btn-info">Details</a>
-                    <a th:href="@{/showUpdateForm(employeeId=${employee.getId()})}" class="btn btn-info">Update</a>
-                    <a th:href="@{/deleteEmployee(employeeId=${employee.getId()})}" class="btn btn-danger ml-2">Delete</a>
+                    <a th:href="@{/showRepairsForm(repairsId=${repair.getId()})}" class="btn btn-info">Details</a>
                 </td>
             </tr>
             </tbody>
+
         </table>
+
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.5/datatables.min.js"></script>
-    <script>
-        $(document).ready(function (){
-            $("#employee-table").DataTable({
-                'aoColumnDefs': [{
-                    'bSortable': false,
-                    'aTargets': [-1]
-                }]
-            });
-        })
-    </script>
 </body>
 </html>
