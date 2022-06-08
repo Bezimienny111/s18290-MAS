@@ -120,6 +120,8 @@ public class Employee {
         return this;
     }
 
+
+
     public Contract getLastContact(){
         return getContracts().get(0);
     }

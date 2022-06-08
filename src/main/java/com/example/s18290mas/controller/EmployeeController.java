@@ -44,6 +44,7 @@ public class EmployeeController {
     public ModelAndView showUpdateForm(@RequestParam Long employeeId){
         ModelAndView mav = new ModelAndView("add-employee-form");
         Employee employee = eRepo.findById(employeeId).get();
+        System.out.println(employee);
         mav.addObject("employee",employee);
         return mav;
     }
@@ -121,6 +122,13 @@ public class EmployeeController {
     public ModelAndView showDetailsForm(@RequestParam Long employeeId){
         ModelAndView mav = new ModelAndView("details-employee");
         Employee employee = eRepo.findById(employeeId).get();
+        List<Employee> employees = eRepo.findAll();
+
+        System.out.println();
+        System.out.println(employee);
+        System.out.println();
+        System.out.println(employees);
+        System.out.println();
         List<Repair> repairs = employee.GetListFromSet();
         mav.addObject("employee",employee);
         mav.addObject("repairs",repairs);
