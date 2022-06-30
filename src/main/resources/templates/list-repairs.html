@@ -26,7 +26,7 @@
             </thead>
             <tbody>
             <tr th:each="repair: ${repairs}">
-                <td th:text="${repair.getName()}"/>
+                <td th:text="${repair.getDescription()}"/>
                 <td>
                     <a th:href="@{/showRepairsForm(repairsId=${repair.getId()})}" class="btn btn-info">Details</a>
                 </td>

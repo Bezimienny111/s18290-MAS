@@ -22,12 +22,12 @@ public class Contract {
     @Getter
     @Setter
     @Column(precision=16, scale=2)
-    private float maxAddon;
+    public float maxAddon;
 
     @Getter
     @Setter
     @Column(precision=11, scale=0)
-    private int countOfRepairs;
+    public int countOfRepairs;
 
     @Getter
     @Setter

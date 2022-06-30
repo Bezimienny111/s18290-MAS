@@ -54,7 +54,7 @@ public class EmployeeController {
         ModelAndView mav;
         String text;
 
-        if(min_repairs >= repairs){
+        if(min_repairs > repairs){
             mav = new ModelAndView("error-form");
             text = "Employee has not enough repairs to add bonus to salary. Press 'Back' button to Employees List";
             mav.addObject("text_error", text);
@@ -122,13 +122,13 @@ public class EmployeeController {
     public ModelAndView showDetailsForm(@RequestParam Long employeeId){
         ModelAndView mav = new ModelAndView("details-employee");
         Employee employee = eRepo.findById(employeeId).get();
-        List<Employee> employees = eRepo.findAll();
+        //List<Employee> employees = eRepo.findAll();
 
-        System.out.println();
-        System.out.println(employee);
-        System.out.println();
-        System.out.println(employees);
-        System.out.println();
+       // System.out.println();
+        System.out.println(employee.GetListFromSet());
+        //System.out.println();
+       // System.out.println(employees);
+       // System.out.println();
         List<Repair> repairs = employee.GetListFromSet();
         mav.addObject("employee",employee);
         mav.addObject("repairs",repairs);

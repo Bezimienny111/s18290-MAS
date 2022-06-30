@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.5/datatables.min.js"></script>
@@ -22,11 +22,22 @@
         </tr>
         <hr/>
         <form th:action="@{/showConfirmBonus}" th:object="${dto}" method="POST">
-            <input text="hidden" th:field="*{id}"/>
-            <input text="hidden" th:field="*{bonus_already}"/>
-            <input type="text" th:field="*{bonus_max}"/>
-            <input type="text" th:field="*{bonustoadd}" placeholder="Enter money" class="form-control col-4 mb-4"/>
-            <button class="btn btn-primary" type="submit">Save</button>
+            <div class="form-group">
+
+                <input type="hidden" th:field="*{id}"/>
+
+                <label for="GivenBonus">Salary bonus already given</label>
+                    <input id="GivenBonus" class="form-control" type="text" th:field="*{bonus_already}" readonly/>
+
+                <label for="MaxBonus">Maximum salary bonus</label>
+                    <input id="MaxBonus" class="form-control" type="text" th:field="*{bonus_max}" readonly/>
+
+                <label for="BonusValue">Add bonus</label>
+                    <input id="BonusValue" class="form-control" type="text" th:field="*{bonustoadd}" placeholder="Enter money"/>
+                    </br>
+                <button class="btn btn-primary" type="submit">Save</button>
+
+            </div>
         </form>
 
 

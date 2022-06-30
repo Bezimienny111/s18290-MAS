@@ -1,6 +1,9 @@
 package com.example.s18290mas.entity;
 
 import com.example.s18290mas.model.JobPosition;
+import com.example.s18290mas.model.State;
+import com.example.s18290mas.model.Status;
+import com.example.s18290mas.model.Type;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -14,22 +17,10 @@ import java.util.*;
 @Builder
 
 @DynamicUpdate
-public class Employee {
+public class Employee  extends  Person{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Getter
-    @Setter
-    private String name;
-    @Getter
-    @Setter
-    private String email;
-    @Getter
-    @Setter
-    private String department;
-
     @Getter
     @Setter
     private float BonusSalary;
@@ -102,15 +93,7 @@ public class Employee {
     }
 
     public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getDepartment() {
-        return department;
+        return super.getName();
     }
 
     public int getTotalRepairs() {
@@ -125,6 +108,97 @@ public class Employee {
     public Contract getLastContact(){
         return getContracts().get(0);
     }
+
+
+    @OneToMany(mappedBy="employeeIn")
+    private Set<Repair> repairsIn;
+
+    @OneToMany(mappedBy="employeeOut")
+    private Set<Repair> repairsOut;
+
+
+    //metody projektowe
+
+    public void changeStatusNext(Repair repair){
+        repair.nextStatus();
+    }
+    public void changeStatusBack(Repair repair){
+        repair.backStatus();
+    }
+
+    public void changeStatusNext(Repair repair, Status status){
+        repair.changeStatus(repair,status);
+    }
+
+    public boolean logIn(String log, String pass){
+        if(log.equals(this.getLogin()) && pass.equals(this.getPass()))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean repairAccesorie(DeviceAccesorie accesorie){
+        if(this.getPosition().equals(JobPosition.SERVICE)) {
+            if (accesorie.getState().equals(State.BROKEN)) {
+                accesorie.setState(State.GOOD);
+                return true;
+            }else
+                return false;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean addFix(Repair repair, String desc, Float price){
+        if(this.getPosition().equals(JobPosition.SERVICE)) {
+            repair.addFix(desc, price);
+            return true;
+        }
+        else
+        return  false;
+    }
+
+
+    public Client addClient(String name, String surname, String tel, String address) throws Exception {
+        if(this.getPosition().equals(JobPosition.SALE)) {
+            Client client = new Client(name,surname,tel,address);
+                    return client;
+        }
+        else throw new Exception("Bład");
+
+    }
+    public Client addClient(String name, String surname, String tel, String address, int NIP) throws Exception {
+        if(this.getPosition().equals(JobPosition.SALE)) {
+            Client client = new Client(name,surname,tel,address,NIP);
+            return client;
+        }
+        else throw new Exception("Bład");
+    }
+
+    public Device addDevice(Client owner, String serialNumber, String description, String brand, Type type) throws Exception {
+        if(this.getPosition().equals(JobPosition.SALE)) {
+            Device device = new Device(owner,serialNumber,description,brand,type);
+            return device;
+        }
+        else throw new Exception("Bład");
+    }
+    public Repair addRepair(String description, Employee employeeIn, Device deviceRep) throws Exception {
+        if(this.getPosition().equals(JobPosition.SALE)) {
+            Repair rep= new Repair(description,employeeIn,deviceRep);
+            return rep;
+        }
+        else throw new Exception("Bład");
+    }
+    public boolean endRepair(Repair repair) throws Exception {
+        if(this.getPosition().equals(JobPosition.SALE) && repair.getStatus().equals(Status.DONE)) {
+            repair.setStatus(Status.OUTOF);
+            repair.setEmployeeOut(this);
+            return true;
+        }
+        else
+            return  false;
+    }
+
 }
 
 

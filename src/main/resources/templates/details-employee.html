@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
-    <title>Add Employees</title>
+    <title>Employee details</title>
 </head>
 <body>
 
@@ -26,8 +26,8 @@
             <thead>
             <tr>
                 <th>Name</th>
-                <th>Email</th>
-                <th>Department</th>
+                <th>Surname</th>
+                <th>Addres</th>
                 <th>Position</th>
                 <th>Total Bonus Salary</th>
                 <th>Total Repairs</th>
@@ -37,8 +37,8 @@
             <tbody>
             <tr th:object="${employee}">
                 <td th:text="${employee.getName()}"/>
-                <td th:text="${employee.getEmail()}"/>
-                <td th:text="${employee.getDepartment()}"/>
+                <td th:text="${employee.getSurname()}"/>
+                <td th:text="${employee.getAdress()}"/>
                 <td th:text="${employee.getPosition().getJobPosition()}"/>
                 <td th:text="${employee.getBonusSalary()}"/>
                 <td th:text="${employee.getTotalRepairs()}"/>
@@ -89,30 +89,31 @@
             <tr>
                 <th>Repair</th>
                 <th>Details of repair</th>
-                <th>Servisants</th>
+                <th>Total price</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="repair: ${repairs}">
-                <td th:text="${repair.name}"/>
+                <td th:text="${repair.description}"/>
                 <td>
                     <a th:href="@{/showRepairsForm(repairsId=${repair.getId()})}" class="btn btn-info">More Info</a>
                 </td>
-                <td>
-                     <table class="table table-bordered table-striped" id="servise">
-                         <tbody>
-                             <tr th:each="servisant: ${repair.servisants()}">
-                                 <td th:text="${servisant.getName()}"/>
-                                 <td>
-                                     <a th:href="@{/showDetailsForm(employeeId=${servisant.getId()})}" class="btn btn-info">Details</a>
-                                 </td>
-                             </tr>
-                         </tbody>
-                    </table>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
+                <!--  <td>
+                       <table class="table table-bordered table-striped" id="servise">
+                           <tbody>
+                               <tr th:each="servisant: ${repair.servisants()}">
+                                   <td th:text="${servisant.getName()}"/>
+                                   <td>
+                                       <a th:href="@{/showDetailsForm(employeeId=${servisant.getId()})}" class="btn btn-info">Details</a>
+                                   </td>
+                               </tr>
+                           </tbody>
+                      </table>
+                  </td> -->
+                <td th:text="${repair.getTotalPrice()}"/>
+              </tr>
+              </tbody>
+          </table>
+      </div>
+  </body>
+  </html>

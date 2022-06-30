@@ -17,8 +17,27 @@
         <table class="table table-bordered table-striped" id="employee-table">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>More info</th>
+                <th>In</th>
+                <th>Out</th>
+                <th>DeviceType</th>
+                <th>Status</th>
+                <th>Total Price</th>
+                <th>Fixes</th>
+             </tr>
+            </thead>
+            <tbody>
+            <td th:text="${repair.getEmployeeIn().getSurname()}"/>
+            <td th:text="${repair.getEmployeeOut()}"/>
+            <td th:text="${repair.getDeviceRep().getType()}"/>
+            <td th:text="${repair.getStatus()}"/>
+            <td th:text="${repair.getTotalPrice()}"/>
+            </tbody>
+        </table>
+        <table class="table table-bordered table-striped" id="servs-table">
+            <thead>
+            <tr>
+                <th>Servisant</th>
+                <th>More info about servisant</th>
             </tr>
             </thead>
             <tbody>
@@ -27,6 +46,18 @@
                 <td>
                     <a th:href="@{/showDetailsForm(employeeId=${employee.getId()})}" class="btn btn-info">Details</a>
                 </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered table-striped" id="fixes">
+            <thead>
+            <tr>
+                <th>Desc</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="fix: ${repair.getFixes().stream().toList()}">
+                <td th:text="${fix.getDescription()}"/>
             </tr>
             </tbody>
         </table>
